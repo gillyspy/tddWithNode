@@ -9,8 +9,11 @@ app.post('/api/v1/users', (req, res) => {
   //hash password
   bcrypt.hash(req.body.password, 7).then((hash) => {
     //extract relevant  user info from body
-    const user =
-      (({ username, email, password }) => ({ username, email, password }))( {...req.body, password : hash } );
+    const user = (({ username, email, password }) => ({
+      username,
+      email,
+      password,
+    }))({ ...req.body, password: hash });
     user.password = hash;
     //create user
     User.create(user)

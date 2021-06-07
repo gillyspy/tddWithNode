@@ -64,7 +64,7 @@ describe('User Registration', () => {
       //query user table
       User.findAll().then((userList) => {
         let u = userList[0];
-        expect(u.password).not.toBe( _t.user1.password );
+        expect(u.password).not.toBe(_t.user1.password);
         done();
       });
     });
