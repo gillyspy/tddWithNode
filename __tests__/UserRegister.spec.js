@@ -50,9 +50,10 @@ describe('User Registration', () => {
       //query user table
       User.findAll().then((userList) => {
         console.log(userList);
+        let u = userList[0];
         expect(userList.length).toBe(1);
-        expect((userList[0].username = _t.user1.username));
-        expect((userList[0].email = _t.user1.email));
+        expect((u.username = _t.user1.username));
+        expect((u.email = _t.user1.email));
         done();
       });
     });
