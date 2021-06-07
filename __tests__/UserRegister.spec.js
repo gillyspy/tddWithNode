@@ -9,5 +9,8 @@ it('returns 200 OK when signup request is valid', (done) => {
       email: 'user1@mail.com',
       password: 'P@sswr0rd',
     })
-    .expect(200, done);
+    .then((response) => {
+      expect(response.status).toBe(200);
+      done();
+    });
 });
