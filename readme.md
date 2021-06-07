@@ -32,3 +32,12 @@ red-green-refactor pattern
 was getting an error in running jest at same time as nodemon (app).  
 moved app.listen out of app root to avoid conflict
 
+### sqllite
+database file is *.sqlite.
+ignore that from git
+can be browsed with its own  tool from https://sqlitebrowser.org.  has a gui as well.
+
+### express parser
+this sums it up nicely
+https://stackoverflow.com/questions/47232187/express-json-vs-bodyparser-json
+
