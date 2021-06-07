@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../app');
+const app = require('..');
 
 describe('User Registration', () => {
   it('returns 200 OK when signup request is valid', (done) => {
