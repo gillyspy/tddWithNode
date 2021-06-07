@@ -1,8 +1,7 @@
-const express = require('express');
+const express = require("express");
 
 const app = express();
 
-
-app.listen(3030,()=>{
+app.listen(3030, () => {
   console.log('app is running');
 });
