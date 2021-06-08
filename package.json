@@ -4,8 +4,8 @@
   "description": "tdd with Node",
   "main": "src/app.js",
   "scripts": {
-    "start": "nodemon index --verbose",
-    "test": "jest --watch",
+    "start": "cross-env NODE_ENV=development nodemon index",
+    "test": "cross-env NODE_END=test jest --watch",
     "lint": "eslint ."
   },
   "author": "Gerald Gillespie",

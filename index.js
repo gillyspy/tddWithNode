@@ -1,6 +1,4 @@
 const app = require('./src/app');
-
-
 const sequelize = require('./src/config/database.js');
 
 sequelize.sync();

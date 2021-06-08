@@ -1,10 +1,8 @@
 const Sequelize = require('sequelize');
-const dbCfg = require('./database.json');
+const env = process.env.NODE_ENV;
+const dbCfg = require(`../../config/${env}.json`);
 
-const sequelize = new Sequelize(dbCfg.db,dbCfg.user, dbCfg.pwd,{
-  dialect : "sqlite",
-  storage : "./database.sqlite",
-  logging : false
-});
+let { db, user, pwd, ...opts } = dbCfg.database;
+const sequelize = new Sequelize(db, user, pwd, opts);
 
 module.exports = sequelize;
