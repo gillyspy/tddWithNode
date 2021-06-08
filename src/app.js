@@ -1,32 +1,12 @@
 const express = require('express');
-const User = require('../src/user/User.js');
-const bcrypt = require('bcrypt');
+const userRouter = require('./user/UserRouter.js');
 
 const app = express();
+
+//parse body with express 4.16+ way
 app.use(express.json());
 
-app.post('/api/v1/users', (req, res) => {
-  //hash password
-  bcrypt.hash(req.body.password, 7).then((hash) => {
-    //extract relevant  user info from body
-    const user = (({ username, email, password }) => ({
-      username,
-      email,
-      password,
-    }))({ ...req.body, password: hash });
-    user.password = hash;
-    //create user
-    User.create(user)
-      .then(() => {
-        //send response
-        return res.send({
-          message: 'User Created',
-        });
-      })
-      .catch((e) => {
-        console.log('catch block', e);
-        return res.status(500).send({ message: 'something went wrong' });
-      });
-  });
-});
+//handle user requests
+app.use('/api/1.0/users', userRouter);
+
 module.exports = app;

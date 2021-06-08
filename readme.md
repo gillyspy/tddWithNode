@@ -10,7 +10,7 @@ e.g. command line
 npx http-server -c-1 -p 8080 -P http://localhost:3030
 ``` 
 
-From the http-server docs:
+From the npx http-server docs:
 >-c Set cache time (in seconds) for cache-control max-age header, e.g. -c10 for 10 seconds (defaults to 3600). To disable caching, use -c-1.
 >
 >-U or --utc Use UTC time format in log messages.
@@ -41,3 +41,5 @@ can be browsed with its own  tool from https://sqlitebrowser.org.  has a gui as 
 this sums it up nicely
 https://stackoverflow.com/questions/47232187/express-json-vs-bodyparser-json
 
+### entry point
+TODO: the client I threw together is hardcoded to interact to a base route of `/api/1.0` :(  
