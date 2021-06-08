@@ -31,42 +31,33 @@ const _f = {
 };
 
 describe('User Registration', () => {
-  it('returns 200 OK when signup request is valid', (done) => {
-    _f.regUser1().then((response) => {
-      expect(response.status).toBe(200);
-      done();
-    });
+  it('returns 200 OK when signup request is valid', async () => {
+    const response = await _f.regUser1();
+    expect(response.status).toBe(200);
   });
 
-  it('returns success message when signup request is valid', (done) => {
-    _f.regUser1().then((response) => {
-      expect(response.body.message).toBe('User Created');
-      done();
-    });
+  it('returns success message when signup request is valid', async () => {
+    const response = await _f.regUser1();
+    expect(response.body.message).toBe('User Created');
   });
 
-  it('saves user to the database', (done) => {
-    _f.regUser1().then(() => {
-      //query user table
-      User.findAll().then((userList) => {
-        console.log(userList);
-        let u = userList[0];
-        expect(userList.length).toBe(1);
-        expect((u.username = _t.user1.username));
-        expect((u.email = _t.user1.email));
-        done();
-      });
-    });
+  it('saves user to the database', async () => {
+    await _f.regUser1();
+
+    //query user table
+    const userList = await User.findAll();
+    console.log(userList);
+    let u = userList[0];
+    expect(userList.length).toBe(1);
+    expect((u.username = _t.user1.username));
+    expect((u.email = _t.user1.email));
   });
 
-  it('hashes the password in the database', (done) => {
-    _f.regUser1().then(() => {
-      //query user table
-      User.findAll().then((userList) => {
-        let u = userList[0];
-        expect(u.password).not.toBe(_t.user1.password);
-        done();
-      });
-    });
+  it('hashes the password in the database', async () => {
+    await _f.regUser1();
+    //query user table
+    const userList = await User.findAll();
+    let u = userList[0];
+    expect(u.password).not.toBe(_t.user1.password);
   });
 });
