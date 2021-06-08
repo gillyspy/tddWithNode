@@ -1,5 +1,5 @@
 #app config
-database.json
+config/*
 *.sqlite
 
 #always-ignore
