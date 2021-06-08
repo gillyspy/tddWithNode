@@ -2,44 +2,4 @@
 Journal
 =======
 
-### 2021-06-07
-#### http-server
-using http-server to simulate the webservice running on a different machine / port than the backend service
-e.g. command line
-```
-npx http-server -c-1 -p 8080 -P http://localhost:3030
-``` 
-
-From the npx http-server docs:
->-c Set cache time (in seconds) for cache-control max-age header, e.g. -c10 for 10 seconds (defaults to 3600). To disable caching, use -c-1.
->
->-U or --utc Use UTC time format in log messages.
->
->--log-ip Enable logging of the client's IP address (default: false).
->
->-P or --proxy Proxies all requests which can't be resolved locally to the given url. e.g.: -P
-
-#### git
-using git on the `source` folder only
-
-the simple "website" is not in source as that is mostly a stub... as-if someone else had responsibility to build it and 
-we are abstracting our implementation from being so tightly coupled.
-
-### tdd
-red-green-refactor pattern  
-
-### nodemon & jest
-was getting an error in running jest at same time as nodemon (app).  
-moved app.listen out of app root to avoid conflict
-
-### sqllite
-database file is *.sqlite.
-ignore that from git
-can be browsed with its own  tool from https://sqlitebrowser.org.  has a gui as well.
-
-### express parser
-this sums it up nicely
-https://stackoverflow.com/questions/47232187/express-json-vs-bodyparser-json
-
-### entry point
-TODO: the client I threw together is hardcoded to interact to a base route of `/api/1.0` :(  
+[20210607](./dox/journal/20210607.md)
