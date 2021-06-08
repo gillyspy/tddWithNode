@@ -26,7 +26,7 @@ const _f = {
     return request(app).post(path).send(user);
   },
   regUser1: function () {
-    return _f.regUser(app, '/api/v1/users', _t.user1);
+    return _f.regUser(app, '/api/1.0/users', _t.user1);
   },
 };
 
