@@ -11,8 +11,12 @@ router.post('/',
     .notEmpty().withMessage('Username cannot be null')
     .bail()
     .isLength({min : 4, max: 32}).withMessage('Username must have at least 4 characters and no more than 32 characters'),
-  check('email').notEmpty().withMessage('Email cannot be null'),
-  check('password').notEmpty().withMessage('Password cannot be null'),
+  check('email').notEmpty().withMessage('Email cannot be null')
+  .bail()
+    .isEmail().withMessage('Email is not valid'),
+  check('password').notEmpty().withMessage('Password cannot be null')
+  .bail()
+    .isLength({min : 4, max: 32}).withMessage('Password must have at least 4 characters and no more than 32 characters'),
   async (req, res) => {
     const errors = validationResult(req);
     const validationErrors = {}

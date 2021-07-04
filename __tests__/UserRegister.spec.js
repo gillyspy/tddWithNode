@@ -76,22 +76,29 @@ describe('User Registration', () => {
     expect(typeof response.body.validationErrors).toBe('object');
   });
 
-  test.each([
-    ['username', 'Username cannot be null'],
-    ['email', 'Email cannot be null'],
-    ['password', 'Password cannot be null']
-  ])
-  ('when parameter %s is null, %s error message is output', async (field, expectedMsg) => {
+  test.each`
+  field            | value               | expectedMsg
+  ${'username'}    | ${null}             | ${'Username cannot be null'}
+  ${'username'}    | ${'usr'}            | ${'Username must have at least 4 characters and no more than 32 characters'}  
+  ${'email'}       | ${null}             | ${'Email cannot be null'}  
+  ${'email'}       | ${'usr'}            | ${'Email is not valid'}  
+  ${'email'}       | ${'mail.com'}       | ${'Email is not valid'}  
+  ${'email'}       | ${'user.mail.com'}  | ${'Email is not valid'}
+  ${'email'}       | ${'user@'}          | ${'Email is not valid'}    
+  ${'password'}    | ${null}             | ${'Password cannot be null'}
+  ${'password'}    | ${'bit'}            | ${'Password must have at least 4 characters and no more than 32 characters'} 
+    `
+  ('when parameter $field is $value, $expectedMsg error message is output', async ({field, value,expectedMsg}) => {
     const invalidField = {};
-    invalidField[field] = null
+    invalidField[field] = value;
     const invalidUser = Object.assign({}, _t.validUser1, invalidField);
 
     const response = await _f.regUser1(invalidUser);
     const feedback = response.body.validationErrors[field];
     expect(feedback).toBe(expectedMsg);
-  })
+  });
 
-  it('check username length is >=4 and <=32 characters', async ()=>{
+  it('check username length is >=4 and <=32 characters', async () => {
     const invalidField = {};
     let field = 'username', expectedMsg = 'Username must have at least 4 characters and no more than 32 characters';
     invalidField[field] = 'usr';
