@@ -49,8 +49,8 @@ describe('User Registration', () => {
     console.log(userList);
     let u = userList[0];
     expect(userList.length).toBe(1);
-    expect((u.username = _t.user1.username));
-    expect((u.email = _t.user1.email));
+    expect((u.username = _t.validUser1.username));
+    expect((u.email = _t.validUser1.email));
   });
 
   it('hashes the password in the database', async () => {
@@ -58,12 +58,12 @@ describe('User Registration', () => {
     //query user table
     const userList = await User.findAll();
     let u = userList[0];
-    expect(u.password).not.toBe(_t.user1.password);
+    expect(u.password).not.toBe(_t.validUser1.password);
   });
 
   it('returns 400 when username is null', async()=>{
     //null user
-    const invalidUser = Object.assign({},_t.user1, { username : null});
+    const invalidUser = Object.assign({},_t.validUser1, { username : null});
 
     const response = await _f.regUser1(invalidUser);
     expect( response.status).toBe(400);
@@ -73,11 +73,11 @@ describe('User Registration', () => {
     const invalidUser = Object.assign({},_t.user1, { username : null});
 
     const response = await _f.regUser1(invalidUser);
-    expect( typeof response.body.validationErrors).not.toBe('object');
+    expect( typeof response.body.validationErrors).toBe('object');
   });
 
-  it('return username cannot be null when username is null', async ()=>{
-    const invalidUser = Object.assign({},_t.user1, { username : null});
+  it('return username validationErrors message when username is null', async ()=>{
+    const invalidUser = Object.assign({},_t.validUser1, { username : null});
 
     const response = await _f.regUser1(invalidUser);
     expect( response.body.validationErrors.username).not.toBe(undefined);
