@@ -6,7 +6,9 @@ router.post('/', async (req, res) => {
   const user  = req.body;
   if( user.username === null){
     return res.status(400).send({
-      validationErrors : 'Username cannot be null'
+      validationErrors : {
+        username : 'Username cannot be null'
+      }
     });
   }
 
