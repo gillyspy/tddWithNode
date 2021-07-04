@@ -14,7 +14,7 @@ beforeEach(() => {
 });
 
 const _t = {
-  user1: {
+  validUser1: {
     username: 'user1',
     email: 'user1@mail.com',
     password: 'P@sswr0rd',
@@ -25,8 +25,8 @@ const _f = {
   regUser: function (app, path, user) {
     return request(app).post(path).send(user);
   },
-  regUser1: function () {
-    return _f.regUser(app, '/api/1.0/users', _t.user1);
+  regUser1: function ( user = _t.validUser1) {
+    return _f.regUser(app, '/api/1.0/users', user);
   },
 };
 
@@ -59,5 +59,13 @@ describe('User Registration', () => {
     const userList = await User.findAll();
     let u = userList[0];
     expect(u.password).not.toBe(_t.user1.password);
+  });
+
+  it('returns 400 when username is null', async()=>{
+    //null user
+    const invalidUser = Object.assign({},_t.user1, { username : null});
+
+    const response = await _f.regUser1(invalidUser);
+    expect( response.status).toBe(400);
   });
 });
