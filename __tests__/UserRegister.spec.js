@@ -75,6 +75,7 @@ describe('User Registration', () => {
     const response = await _f.regUser1(invalidUser);
     expect(typeof response.body.validationErrors).toBe('object');
   });
+
   test.each([
     ['username', 'Username cannot be null'],
     ['email', 'Email cannot be null'],
@@ -90,4 +91,15 @@ describe('User Registration', () => {
     expect(feedback).toBe(expectedMsg);
   })
 
+  it('check username length is >=4 and <=32 characters', async ()=>{
+    const invalidField = {};
+    let field = 'username', expectedMsg = 'Username must have at least 4 characters and no more than 32 characters';
+    invalidField[field] = 'usr';
+    const invalidUser = Object.assign({}, _t.validUser1, invalidField);
+
+    const response = await _f.regUser1(invalidUser);
+    const feedback = response.body.validationErrors[field];
+    expect(feedback).toBe(expectedMsg);
+
+  })
 });
