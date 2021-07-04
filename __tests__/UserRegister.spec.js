@@ -10,22 +10,22 @@ beforeAll(() => {
 
 //clean before each test
 beforeEach(() => {
-  return User.destroy({ truncate: true });
+  return User.destroy({truncate: true});
 });
 
 const _t = {
   validUser1: {
     username: 'user1',
-    email: 'user1@mail.com',
+    email   : 'user1@mail.com',
     password: 'P@sswr0rd',
   },
 };
 
 const _f = {
-  regUser: function (app, path, user) {
+  regUser : function (app, path, user) {
     return request(app).post(path).send(user);
   },
-  regUser1: function ( user = _t.validUser1) {
+  regUser1: function (user = _t.validUser1) {
     return _f.regUser(app, '/api/1.0/users', user);
   },
 };
@@ -61,35 +61,33 @@ describe('User Registration', () => {
     expect(u.password).not.toBe(_t.validUser1.password);
   });
 
-  it('returns 400 when username is null', async()=>{
+  it('returns 400 when username is null', async () => {
     //null user
-    const invalidUser = Object.assign({},_t.validUser1, { username : null});
+    const invalidUser = Object.assign({}, _t.validUser1, {username: null});
 
     const response = await _f.regUser1(invalidUser);
-    expect( response.status).toBe(400);
+    expect(response.status).toBe(400);
   });
 
-  it('return validationErrors object  w/ response for any errors', async ()=>{
-    const invalidUser = Object.assign({},_t.user1, { username : null});
+  it('return validationErrors object  w/ response for any errors', async () => {
+    const invalidUser = Object.assign({}, _t.user1, {username: null});
 
     const response = await _f.regUser1(invalidUser);
-    expect( typeof response.body.validationErrors).toBe('object');
+    expect(typeof response.body.validationErrors).toBe('object');
   });
-
-  it('return username validationErrors message when username is null', async ()=>{
-    const invalidUser = Object.assign({},_t.validUser1, { username : null});
+  test.each([
+    ['username', 'Username cannot be null'],
+    ['email', 'Email cannot be null'],
+    ['password', 'Password cannot be null']
+  ])
+  ('when parameter %s is null, %s error message is output', async (field, expectedMsg) => {
+    const invalidField = {};
+    invalidField[field] = null
+    const invalidUser = Object.assign({}, _t.validUser1, invalidField);
 
     const response = await _f.regUser1(invalidUser);
-    expect( response.body.validationErrors.username).not.toBe(undefined);
-    expect( typeof response.body.validationErrors.username).toBe('string');
+    const feedback = response.body.validationErrors[field];
+    expect(feedback).toBe(expectedMsg);
+  })
 
-  });
-  it('return email validationErrors message when email is null', async ()=>{
-    const invalidUser = Object.assign({},_t.validUser1, { email : null});
-
-    const response = await _f.regUser1(invalidUser);
-    expect( response.body.validationErrors.email).not.toBe(undefined);
-    expect( typeof response.body.validationErrors.email).toBe('string');
-
-  });
 });
