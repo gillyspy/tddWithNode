@@ -68,4 +68,11 @@ describe('User Registration', () => {
     const response = await _f.regUser1(invalidUser);
     expect( response.status).toBe(400);
   });
+
+  it('return validationErrors field w/ response for any errors', async ()=>{
+    const invalidUser = Object.assign({},_t.user1, { username : null});
+
+    const response = await _f.regUser1(invalidUser);
+    expect( response.body.validationErrors).not.toBe(undefined);
+  })
 });
