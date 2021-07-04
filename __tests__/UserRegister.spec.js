@@ -84,4 +84,12 @@ describe('User Registration', () => {
     expect( typeof response.body.validationErrors.username).toBe('string');
 
   });
+  it('return email validationErrors message when email is null', async ()=>{
+    const invalidUser = Object.assign({},_t.validUser1, { email : null});
+
+    const response = await _f.regUser1(invalidUser);
+    expect( response.body.validationErrors.email).not.toBe(undefined);
+    expect( typeof response.body.validationErrors.email).toBe('string');
+
+  });
 });

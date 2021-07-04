@@ -4,14 +4,19 @@ const userService = require('./UserService');
 
 const validateUserName = (req, res, next) => {
   const user = req.body;
+  const validationErrors = {}
   if (user.username === null) {
+    validationErrors.username = 'Username cannot be null';
+  }
+  if (user.email === null) {
+    validationErrors.email = 'Email cannot be null';
+  }
+
+  if (Object.keys(validationErrors).length !== 0)
     return res.status(400).send({
-      validationErrors: {
-        username: 'Username cannot be null'
-      }
+      validationErrors
     });
 
-  }
   next();
 }
 
